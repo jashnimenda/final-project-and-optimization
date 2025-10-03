@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ElectroMart - Electronics Store</title>
+
+  <style>
+    /* General Body */
+    body { 
+      font-family: 'Arial', sans-serif; 
+      background: #f4f6f8; /* light gray-blue background */
+      color: #333; 
+      margin: 0; 
+    }
+
+    /* Header */
+    header { 
+      background: #1a73e8; /* professional blue */
+      color: white; 
+      padding: 1rem; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap; 
+    }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    header input[type=search] { 
+      padding: 0.5rem; 
+      border-radius: 5px; 
+      border: none; 
+      margin-top: 0.5rem; 
+      flex: 1; 
+      min-width: 150px; 
+    }
+    header button { 
+      padding: 0.5rem 1rem; 
+      background: #fbbc05; /* subtle yellow accent */
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      margin-top: 0.5rem; 
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* Navigation */
+    nav { 
+      background: #e8f0fe; /* very light blue */
+      padding: 0.5rem 2rem; 
+      display: flex; 
+      gap: 1rem; 
+      flex-wrap: wrap; 
+    }
+    nav a { 
+      text-decoration: none; 
+      color: #1a73e8; 
+      font-weight: 600; 
+    }
+
+    /* Main content */
+    main { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+
+    /* Hero section */
+    .hero { 
+      background: #ffffff; /* clean white card */
+      padding: 2rem; 
+      text-align: center; 
+      border-radius: 8px; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .hero h2 { margin-bottom: 1rem; color: #1a73e8; }
+    .hero p { margin-bottom: 1rem; color: #555; }
+    .hero button { 
+      padding: 0.5rem 1rem; 
+      background: #1a73e8; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    }
+
+    /* Product cards */
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .card { 
+      background: #ffffff; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      text-align: center; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+      display: flex; 
+      flex-direction: column; 
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+    .card img { width: 100%; height: auto; max-height: 200px; object-fit: contain; border-radius: 5px; margin-bottom: 0.5rem; }
+    .card h3 { margin: 0.5rem 0; font-size: 1.1rem; color: #1a73e8; flex-grow: 1; }
+    .card p { color: #555; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .card .price { font-weight: bold; margin: 0.5rem 0; color: #333; }
+    .card button { 
+      padding: 0.5rem; 
+      background: #28a745; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background 0.2s;
+    }
+    .card button:hover { background: #218838; }
+
+    /* Cart */
+    .cart { 
+      position: fixed; 
+      top: 80px; 
+      right: 20px; 
+      width: 90%; 
+      max-width: 300px; 
+      background: #ffffff; 
+      padding: 1rem; 
+      border-radius: 8px; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15); 
+      display: none; 
+      flex-direction: column; 
+      z-index: 1000; 
+    }
+    .cart h4 { margin-top: 0; color: #1a73e8; }
+    .cart-item { display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #555; }
+    .cart-total { font-weight: bold; margin-top: 1rem; display: flex; justify-content: space-between; color: #333; }
+    .cart button { margin-top: 1rem; background: #1a73e8; color: white; border: none; padding: 0.5rem; border-radius: 5px; cursor: pointer; }
+
+    /* Footer */
+    footer { text-align: center; margin: 2rem 0; color: #888; font-size: 0.9rem; }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      header input, header button { width: 100%; margin-top: 0.5rem; }
+      nav { flex-direction: column; }
+      .products { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .card img { max-height: 150px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ElectroMart</h1>
+  <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
+    <input type="search" id="search" placeholder="Search products...">
+    <button id="cartToggle">Cart (0)</button>
+  </div>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+</nav>
+
+<main>
+  <section class="hero" id="home">
+    <h2>Welcome to ElectroMart</h2>
+    <p>Your simple and neat electronics store. Browse products, search items, and add to your cart easily.</p>
+    <button onclick="scrollToProducts()">View Products</button>
+  </section>
+
+  <section class="products" id="products"></section>
+</main>
+
+<div class="cart" id="cart">
+  <h4>Your Cart</h4>
+  <div id="cartItems"></div>
+  <div class="cart-total">Total: <span id="cartTotal">₹0</span></div>
+  <button id="checkout">Checkout</button>
+</div>
+
+<footer>© 2025 ElectroMart</footer>
+
+<script>
+const productsData = [
+  {id:1,name:'Smartphone',price:15000,img:'smartphone.jpg'},
+  {id:2,name:'Laptop',price:55000,img:'laptop.jpg'},
+  {id:3,name:'Wireless Earbuds',price:3500,img:'buds.jpg'},
+  {id:4,name:'Smart Watch',price:7999,img:'sw.jpg'},
+  {id:5,name:'Tablet',price:18000,img:'tab.jpg'},
+  {id:6,name:'Gaming Console',price:40000,img:'gs.jpg'}
+];
+
+let cart = {};
+
+function renderProducts(list){
+  const container = document.getElementById('products');
+  container.innerHTML='';
+  list.forEach(p=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <img src='${p.img}' alt='${p.name}'>
+      <h3>${p.name}</h3>
+      <p>Price: ₹${p.price}</p>
+      <button data-id='${p.id}'>Add to Cart</button>
+    `;
+    container.appendChild(card);
+  });
+  document.querySelectorAll('.card button').forEach(btn=>{
+    btn.addEventListener('click',()=>addToCart(btn.dataset.id));
+  });
+}
+
+function addToCart(id){
+  cart[id] = (cart[id]||0)+1;
+  updateCart();
+}
+
+function updateCart(){
+  const cartItems = document.getElementById('cartItems');
+  cartItems.innerHTML='';
+  let total=0;
+  Object.keys(cart).forEach(id=>{
+    const p = productsData.find(x=>x.id==id);
+    const qty = cart[id];
+    total+=p.price*qty;
+    const div = document.createElement('div');
+    div.className='cart-item';
+    div.textContent=`${p.name} x${qty} - ₹${p.price*qty}`;
+    cartItems.appendChild(div);
+  });
+  document.getElementById('cartTotal').textContent='₹'+total;
+  document.getElementById('cartToggle').textContent=`Cart (${Object.values(cart).reduce((a,b)=>a+b,0)})`;
+}
+
+document.getElementById('cartToggle').addEventListener('click',()=>{
+  const cartEl = document.getElementById('cart');
+  cartEl.style.display = cartEl.style.display==='flex'?'none':'flex';
+});
+
+document.getElementById('checkout').addEventListener('click',()=>{
+  if(Object.keys(cart).length===0){alert('Cart is empty'); return;}
+  alert('Checkout simulated. Total: '+document.getElementById('cartTotal').textContent);
+  cart = {};
+  updateCart();
+});
+
+function scrollToProducts(){
+  document.getElementById('products').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('search').addEventListener('input',e=>{
+  const q = e.target.value.toLowerCase();
+  renderProducts(productsData.filter(p=>p.name.toLowerCase().includes(q)));
+});
+
+renderProducts(productsData);
+</script>
+
+</body>
+</html>
